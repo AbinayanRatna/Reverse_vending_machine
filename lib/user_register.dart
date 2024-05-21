@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reverse_vending_recycling/otp_page.dart';
+
 import 'first_page.dart';
 import 'loading_page.dart';
 
@@ -14,6 +18,7 @@ class UserRegister extends StatefulWidget {
 
 class _UserRegisterState extends State<UserRegister> {
   TextEditingController _numberController = TextEditingController();
+  DatabaseReference dbRef=FirebaseDatabase.instance.ref().child("Users");
 
   @override
   void initState() {
@@ -39,9 +44,7 @@ class _UserRegisterState extends State<UserRegister> {
           title: Text(
             "Enter the phone number",
             style: TextStyle(
-                fontSize: 20.w,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
+                fontSize: 20.w, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           toolbarHeight: 60.w,
           centerTitle: true,
@@ -53,8 +56,7 @@ class _UserRegisterState extends State<UserRegister> {
               Expanded(
                 flex: 2,
                 child: Padding(
-                  padding:
-                      EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
+                  padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
                   child: Container(
                     width: widthDevice,
                     decoration: const BoxDecoration(
@@ -67,7 +69,7 @@ class _UserRegisterState extends State<UserRegister> {
                     child: Center(
                       child: Padding(
                         padding:
-                            EdgeInsets.only(top: 50.w, left: 30.w, right: 30.w),
+                        EdgeInsets.only(top: 50.w, left: 30.w, right: 30.w),
                         child: TextField(
                           readOnly: true,
                           showCursor: false,
@@ -97,7 +99,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -122,14 +124,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}1";
+                                          "${_numberController.text.trim()}1";
                                         },
                                         child: Center(
                                           child: Text(
@@ -147,7 +147,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -172,14 +172,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}2";
+                                          "${_numberController.text.trim()}2";
                                         },
                                         child: Center(
                                           child: Text(
@@ -197,7 +195,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -222,14 +220,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}3";
+                                          "${_numberController.text.trim()}3";
                                         },
                                         child: Center(
                                           child: Text(
@@ -257,7 +253,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -282,14 +278,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}4";
+                                          "${_numberController.text.trim()}4";
                                         },
                                         child: Center(
                                           child: Text(
@@ -307,7 +301,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -332,14 +326,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}5";
+                                          "${_numberController.text.trim()}5";
                                         },
                                         child: Center(
                                           child: Text(
@@ -357,7 +349,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -382,14 +374,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}6";
+                                          "${_numberController.text.trim()}6";
                                         },
                                         child: Center(
                                           child: Text(
@@ -417,7 +407,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -442,14 +432,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}7";
+                                          "${_numberController.text.trim()}7";
                                         },
                                         child: Center(
                                           child: Text(
@@ -467,7 +455,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -492,14 +480,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}8";
+                                          "${_numberController.text.trim()}8";
                                         },
                                         child: Center(
                                           child: Text(
@@ -517,7 +503,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -542,14 +528,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}9";
+                                          "${_numberController.text.trim()}9";
                                         },
                                         child: Center(
                                           child: Text(
@@ -577,7 +561,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -602,10 +586,8 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text = "";
@@ -626,7 +608,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -651,14 +633,12 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}0";
+                                          "${_numberController.text.trim()}0";
                                         },
                                         child: Center(
                                           child: Text(
@@ -676,7 +656,7 @@ class _UserRegisterState extends State<UserRegister> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -701,32 +681,31 @@ class _UserRegisterState extends State<UserRegister> {
                                           borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
-                                              bottomRight:
-                                                  Radius.circular(20.w),
-                                              bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              bottomRight: Radius.circular(20.w),
+                                              bottomLeft: Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           if (_numberController.text
                                               .trim()
                                               .isNotEmpty) {
                                             _numberController.text =
-                                                _numberController.text
+                                                _numberController
+                                                    .text
                                                     .trim()
                                                     .substring(
-                                                        0,
-                                                        _numberController.text
-                                                                .trim()
-                                                                .length -
-                                                            1);
+                                                    0,
+                                                    _numberController.text
+                                                        .trim()
+                                                        .length -
+                                                        1);
                                           }
                                         },
                                         child: Center(
                                             child: Icon(
-                                          Icons.backspace_rounded,
-                                          color: Colors.white,
-                                          size: 40.w,
-                                        )),
+                                              Icons.backspace_rounded,
+                                              color: Colors.white,
+                                              size: 40.w,
+                                            )),
                                       ),
                                     ),
                                   )),
@@ -752,10 +731,7 @@ class _UserRegisterState extends State<UserRegister> {
                     backgroundColor: const Color.fromRGBO(67, 134, 71, 1.0),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const FirstPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>const FirstPage()));
                     /*
                     Navigator.pushAndRemoveUntil(
                         context,
@@ -798,12 +774,53 @@ class _UserRegisterState extends State<UserRegister> {
                       _numberController.text =
                           _numberController.text.substring(1);
                     }
-                    MaterialPageRoute(
-                      builder: (context) => OtpCheckPage(
-                        verificationId: "verificationId",
-                        mobileNumber: _numberController.text,
-                      ),
-                    );
+                    if (_numberController.text.length == 9) {
+                      _numberController.text='+94${_numberController.text}';
+                      dbRef.child("${_numberController.text}/Total points").once().then((event) async {
+                        DataSnapshot snapshot = event.snapshot;
+                        if (snapshot.value != null) {
+                          showErrorMessage(context, "Account already found");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const UserRegister(),
+                            ),
+                          );
+                        } else {
+                          try {
+                            await FirebaseAuth.instance.verifyPhoneNumber(
+                              phoneNumber: _numberController.text,
+                              verificationCompleted:
+                                  (PhoneAuthCredential credential) {},
+                              verificationFailed: (FirebaseAuthException e) {},
+                              codeSent: (String verificationId, int? resendToken) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => OtpCheckPage(
+                                      verificationId: verificationId,
+                                      mobileNumber: _numberController.text,
+                                    ),
+                                  ),
+                                );
+                              },
+                              codeAutoRetrievalTimeout: (String verificationId) {},
+                            );
+                          } on FirebaseAuthException catch (e) {
+                            // Check if the widget is still in the widget tree
+                            if (!mounted) return;
+                            // Handle errors, such as wrong OTP
+                            print("Error: $e");
+                          }
+                        }
+                      }, onError: (Object error) {
+                        print("Error: $error");
+                      });
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: "Enter a valid number",
+                          toastLength: Toast.LENGTH_SHORT);
+                    }
                   },
                   child: Padding(
                     padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
@@ -820,7 +837,6 @@ class _UserRegisterState extends State<UserRegister> {
       ),
     );
   }
-
   void showErrorMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -870,3 +886,4 @@ class _UserRegisterState extends State<UserRegister> {
     );
   }
 }
+

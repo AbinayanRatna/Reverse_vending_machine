@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,11 +18,14 @@ class OtpCheckPage extends StatefulWidget {
 }
 
 class _OtpCheckPageState extends State<OtpCheckPage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController _numberController = TextEditingController();
+  late DatabaseReference dbref;
 
   @override
   void initState() {
     super.initState();
+    dbref = FirebaseDatabase.instance.ref().child("Users");
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -57,7 +62,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                 flex: 2,
                 child: Padding(
                   padding:
-                      EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
+                  EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),
                   child: Container(
                     width: widthDevice,
                     decoration: const BoxDecoration(
@@ -70,7 +75,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                     child: Center(
                       child: Padding(
                         padding:
-                            EdgeInsets.only(top: 50.w, left: 30.w, right: 30.w),
+                        EdgeInsets.only(top: 50.w, left: 30.w, right: 30.w),
                         child: TextField(
                           readOnly: true,
                           showCursor: false,
@@ -100,7 +105,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -126,13 +131,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}1";
+                                          "${_numberController.text.trim()}1";
                                         },
                                         child: Center(
                                           child: Text(
@@ -150,7 +155,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -176,13 +181,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}2";
+                                          "${_numberController.text.trim()}2";
                                         },
                                         child: Center(
                                           child: Text(
@@ -200,7 +205,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -226,13 +231,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}3";
+                                          "${_numberController.text.trim()}3";
                                         },
                                         child: Center(
                                           child: Text(
@@ -260,7 +265,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -286,13 +291,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}4";
+                                          "${_numberController.text.trim()}4";
                                         },
                                         child: Center(
                                           child: Text(
@@ -310,7 +315,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -336,13 +341,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}5";
+                                          "${_numberController.text.trim()}5";
                                         },
                                         child: Center(
                                           child: Text(
@@ -360,7 +365,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -386,13 +391,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}6";
+                                          "${_numberController.text.trim()}6";
                                         },
                                         child: Center(
                                           child: Text(
@@ -420,7 +425,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -446,13 +451,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}7";
+                                          "${_numberController.text.trim()}7";
                                         },
                                         child: Center(
                                           child: Text(
@@ -470,7 +475,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -496,13 +501,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}8";
+                                          "${_numberController.text.trim()}8";
                                         },
                                         child: Center(
                                           child: Text(
@@ -520,7 +525,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -546,13 +551,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}9";
+                                          "${_numberController.text.trim()}9";
                                         },
                                         child: Center(
                                           child: Text(
@@ -580,7 +585,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -606,9 +611,9 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text = "";
@@ -629,7 +634,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -655,13 +660,13 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           _numberController.text =
-                                              "${_numberController.text.trim()}0";
+                                          "${_numberController.text.trim()}0";
                                         },
                                         child: Center(
                                           child: Text(
@@ -679,7 +684,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                   flex: 1,
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(left: 20, right: 20.w),
+                                    EdgeInsets.only(left: 20, right: 20.w),
                                     child: Container(
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -705,9 +710,9 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                               topRight: Radius.circular(20.w),
                                               topLeft: Radius.circular(20.w),
                                               bottomRight:
-                                                  Radius.circular(20.w),
+                                              Radius.circular(20.w),
                                               bottomLeft:
-                                                  Radius.circular(20.w))),
+                                              Radius.circular(20.w))),
                                       child: InkWell(
                                         onTap: () {
                                           if (_numberController.text
@@ -717,19 +722,19 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                                                 _numberController.text
                                                     .trim()
                                                     .substring(
-                                                        0,
-                                                        _numberController.text
-                                                                .trim()
-                                                                .length -
-                                                            1);
+                                                    0,
+                                                    _numberController.text
+                                                        .trim()
+                                                        .length -
+                                                        1);
                                           }
                                         },
                                         child: Center(
                                             child: Icon(
-                                          Icons.backspace_rounded,
-                                          color: Colors.white,
-                                          size: 40.w,
-                                        )),
+                                              Icons.backspace_rounded,
+                                              color: Colors.white,
+                                              size: 40.w,
+                                            )),
                                       ),
                                     ),
                                   )),
@@ -759,7 +764,7 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const FirstPage()),
-                        (route) => false);
+                            (route) => false);
                   },
                   child: Padding(
                     padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
@@ -781,12 +786,28 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
                         borderRadius: BorderRadius.all(Radius.zero)),
                   ),
                   onPressed: () async {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                HomePage(phoneNumber: widget.mobileNumber)),
-                        (route) => false);
+                    try {
+                      showToastMessage(context, "Please wait");
+                      PhoneAuthCredential credential =
+                      PhoneAuthProvider.credential(
+                          verificationId: widget.verificationId,
+                          smsCode: _numberController.text);
+                      // Sign the user in (or link) with the credential
+                      await auth.signInWithCredential(credential);
+                      Map<String, String> userAdd = {
+                        "Total points": "0",
+                        "bottles": "0"
+                      };
+                      dbref.child(widget.mobileNumber).set(userAdd);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  HomePage(phoneNumber: widget.mobileNumber)),
+                              (route) => false);
+                    } on FirebaseAuthException catch (e) {
+                      showErrorMessage(context, "Incorrect OTP");
+                    }
                   },
                   child: Padding(
                     padding: EdgeInsets.only(top: 20.w, bottom: 20.w),
@@ -903,3 +924,4 @@ class _OtpCheckPageState extends State<OtpCheckPage> {
     );
   }
 }
+
