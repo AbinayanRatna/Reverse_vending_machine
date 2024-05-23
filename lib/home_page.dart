@@ -1,7 +1,45 @@
+import 'dart:async';
+import 'dart:io';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:reverse_vending_recycling/first_page.dart';
+
+
+class BluetoothManager {
+  BluetoothConnection? connection; // Make it nullable (Optional 1)
+  final List<String> receivedMessages = []; // Store received messages
+
+  Future<void> connect(String address) async {
+    try {
+      connection = await BluetoothConnection.toAddress(address);
+      connection?.input?.listen(onDataReceived); // Listen to incoming data
+    } on Exception catch (e) {
+      print('Connection error: $e');
+    }
+  }
+
+  Future<void> disconnect() async {
+    try {
+      await connection?.close();
+    } on Exception catch (e) {
+      print('Disconnection error: $e');
+    }
+  }
+
+  void onDataReceived(List<int> data) {
+    // Handle incoming data from the HC-06 module
+    String message = String.fromCharCodes(data); // Convert bytes to string
+    receivedMessages.add(message);
+    print('Received message: $message');
+  }
+}
+
+
 
 class HomePage extends StatefulWidget {
   final String phoneNumber;
@@ -13,20 +51,102 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late DatabaseReference dbRef;
   String numberOfBottles = "0";
   int numberOfBottlesLocal = 0;
   String totalPoints = "0";
+  bool clicked=false;
+  bool addButtonDisabled=false;
+  late StreamSubscription pointsSubscription;
+  final BluetoothManager _bluetoothManager = BluetoothManager();
+  String _message = '';
+  bool _isConnected = false;
+
+  Future<void> _checkConnection() async {
+    await Permission.location
+        .request(); // Needed for Bluetooth scanning on Android
+    await Permission.bluetooth.request();
+    // Check for BLUETOOTH_SCAN permission on Android 13 or later
+    if (Platform.isAndroid &&
+        int.parse(Platform.version.split('.').first) >= 13) {
+      await Permission.bluetoothScan.request();
+    }
+  }
+
+  Future<void> _connect() async {
+    String address = '98:DA:60:08:40:2A';
+    await _checkConnection(); // Ensure permissions before connection
+    await _bluetoothManager.connect(address);
+    setState(() {
+      _isConnected = true;
+    });
+  }
+
+  Future<void> _disconnect() async {
+    await _bluetoothManager.disconnect();
+    setState(() {
+      _isConnected = false;
+    });
+  }
+
+  Future<void> _sendMessage(String messageSend) async {
+    if (_isConnected) {
+      _bluetoothManager.connection?.output
+          .add(Uint8List.fromList(messageSend.codeUnits)); // Convert to Uint8List
+      setState(() {
+        messageSend = '';
+      });
+    } else {
+      // Handle sending message when not connected
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      addButtonDisabled=false;
+    });
+    _connect();
+    _bluetoothManager.receivedMessages.add("new");
+    _checkConnection();
+    dbRef =
+        FirebaseDatabase.instance.ref().child("Users/${widget.phoneNumber}");
+    obtainPointsDetails("bottles");
+    obtainPointsDetails("Total points");
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
   }
 
+  void obtainPointsDetails(String ref) {
+    DatabaseReference loyaltyPointsRef = FirebaseDatabase.instance
+        .ref()
+        .child("Users/${widget.phoneNumber}/$ref");
+    pointsSubscription = loyaltyPointsRef.onValue.listen((event) {
+      DataSnapshot snapshot = event.snapshot;
+      if (snapshot.value != null) {
+        setState(() {
+          if(ref=="bottles"){
+            numberOfBottles = (snapshot.value.toString());
+          }else if(ref=="Total points"){
+            totalPoints = (snapshot.value.toString());
+          }
+
+          print("newnew points : $totalPoints");
+        });
+      } else {
+        print("Snapshot is null or empty.");
+      }
+    }, onError: (Object error) {
+      print("Error: $error");
+    });
+  }
+
+
   @override
   void dispose() {
+    pointsSubscription.cancel();
     super.dispose();
   }
 
@@ -40,7 +160,7 @@ class _HomePageState extends State<HomePage> {
         return false;
       },
       child: MaterialApp(
-        home: Scaffold(
+        home:Scaffold(
             appBar: AppBar(
                 automaticallyImplyLeading: false,
                 title: Padding(
@@ -78,8 +198,7 @@ class _HomePageState extends State<HomePage> {
                   width: widthSize,
                   height: heightSize,
                   child: Padding(
-                    padding:
-                        EdgeInsets.only(left: 20.w, right: 20.w, top: 30.w),
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 30.w),
                     child: Column(
                       children: [
                         Expanded(
@@ -91,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                               decoration: BoxDecoration(
                                 color: const Color.fromRGBO(165, 214, 167, 0.8),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20.w)),
+                                BorderRadius.all(Radius.circular(20.w)),
                               ),
                               child: Column(
                                 children: [
@@ -133,7 +252,7 @@ class _HomePageState extends State<HomePage> {
                               decoration: BoxDecoration(
                                 color: const Color.fromRGBO(165, 214, 167, 0.8),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20.w)),
+                                BorderRadius.all(Radius.circular(20.w)),
                               ),
                               child: Column(
                                 children: [
@@ -171,7 +290,7 @@ class _HomePageState extends State<HomePage> {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20.w)),
+                              BorderRadius.all(Radius.circular(20.w)),
                             ),
                             child: Row(
                               children: [
@@ -181,15 +300,16 @@ class _HomePageState extends State<HomePage> {
                                     padding: EdgeInsets.only(right: 10.w),
                                     child: ElevatedButton(
                                       onPressed: () {
+                                        _sendMessage("1");
                                         showDialog(
                                           context: context,
                                           builder: (context) {
                                             return AlertDialog(
                                               shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.zero)),
+                                              const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                  BorderRadius.all(
+                                                      Radius.zero)),
                                               backgroundColor: Colors.white,
                                               content: Text(
                                                 "Put the bottle inside and press the 'add' button below",
@@ -202,37 +322,69 @@ class _HomePageState extends State<HomePage> {
                                               actions: [
                                                 ElevatedButton(
                                                   style:
-                                                      ElevatedButton.styleFrom(
+                                                  ElevatedButton.styleFrom(
                                                     backgroundColor:
-                                                        Colors.black,
+                                                    Colors.black,
                                                     elevation: 0,
                                                   ),
                                                   onPressed: () async {
-                                                    Navigator.of(context).pop();
+                                                    if(addButtonDisabled==false){
+                                                      setState(() {
+                                                        addButtonDisabled=true;
+                                                      });
+                                                      _sendMessage("2");
+                                                      await Future.delayed(Duration(seconds: 5)).then((value) {
+                                                        print("receivedMessages.last = ${_bluetoothManager.receivedMessages.last}");
+                                                        if(_bluetoothManager.receivedMessages.last.contains( "3")){
+                                                          print("receivedMessages.last inside= ${_bluetoothManager.receivedMessages.last}");
+                                                          numberOfBottles=(int.parse(numberOfBottles)+1).toString();
+                                                          totalPoints =(double.parse(totalPoints)+(0.1)).toString();
+
+                                                          Map<String, String>  newPointsUpdate = {
+                                                            "Total points": (double.parse(totalPoints).toStringAsFixed(2)).toString(),
+                                                            "bottles":numberOfBottles,
+                                                          };
+                                                          dbRef.update(newPointsUpdate);
+                                                          _sendMessage("5");
+                                                          addButtonDisabled=false;
+                                                          _bluetoothManager.receivedMessages.add("new");
+                                                          Navigator.of(context).pop();
+                                                        }else if(_bluetoothManager.receivedMessages.last.contains( "4")){
+                                                          print("receivedMessages.last inside false= ${_bluetoothManager.receivedMessages.last}");
+                                                          _sendMessage("5");
+                                                          Fluttertoast.showToast(msg: "Please check the bottle and try again",toastLength:Toast.LENGTH_SHORT );
+                                                          addButtonDisabled=false;
+                                                          Navigator.of(context).pop();
+                                                        }
+                                                      });
+
+                                                    }
+
                                                   },
                                                   child: Padding(
                                                     padding: EdgeInsets.only(
                                                         top: 10.w,
                                                         bottom: 10.w),
                                                     child: Text(
-                                                      "Add",
+                                                      "Close",
                                                       style: TextStyle(
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                          FontWeight.bold,
                                                           fontSize: 15.w,
                                                           color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
                                                 ElevatedButton(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
+                                                  style: ElevatedButton
+                                                      .styleFrom(
                                                     backgroundColor:
-                                                        Colors.black,
+                                                    Colors.black,
                                                     elevation: 0,
                                                   ),
                                                   onPressed: () {
-                                                    Navigator.of(context).pop();
+                                                    Navigator.of(context)
+                                                        .pop();
                                                   },
                                                   child: Padding(
                                                     padding: EdgeInsets.only(
@@ -242,16 +394,17 @@ class _HomePageState extends State<HomePage> {
                                                       "Cancel",
                                                       style: TextStyle(
                                                           fontWeight:
-                                                              FontWeight.bold,
+                                                          FontWeight.bold,
                                                           fontSize: 15.w,
-                                                          color: Colors.white),
+                                                          color:
+                                                          Colors.white),
                                                     ),
-                                                  ),
-                                                )
+                                                  ),)
                                               ],
                                             );
                                           },
                                         );
+
                                       },
                                       style: ElevatedButton.styleFrom(
                                         elevation: 0,
@@ -286,8 +439,8 @@ class _HomePageState extends State<HomePage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const FirstPage()),
-                                            (route) => false);
+                                                const FirstPage()),
+                                                (route) => false);
                                       },
                                       style: ElevatedButton.styleFrom(
                                         elevation: 0,
@@ -341,7 +494,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
   void showToastMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
