@@ -8,17 +8,7 @@ import 'first_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Platform.isAndroid
-      ? await Firebase.initializeApp(
-          options: const FirebaseOptions(
-            apiKey: 'AIzaSyBMpGuLH2RDlSFZP0IoRse4QNCsuh5DgYc',
-            appId: '1:602523507187:android:cfcb2ac1be18bd6a489a86',
-            messagingSenderId: '602523507187',
-            projectId: 'recycle-machine-a3cf3',
-            storageBucket: 'recycle-machine-a3cf3.appspot.com',
-          ),
-        )
-      : await Firebase.initializeApp(); //need to add firebase for ios
+ await Firebase.initializeApp(); //need to add firebase for ios and android
   runApp(const MyApp());
 }
 
